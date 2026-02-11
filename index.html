@@ -11,32 +11,10 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-background:#ffd6e8; /* ROSA PASTEL */
+background:#ffd6e8;
 color:white;
 font-family:'Poppins',sans-serif;
 overflow:hidden;
-}
-
-/* ESTRELLAS */
-.stars{
-position:fixed;
-width:100%;
-height:100%;
-z-index:-1;
-}
-
-.star{
-position:absolute;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-animation:twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle{
-from{opacity:0.3;}
-to{opacity:1;}
 }
 
 section{
@@ -114,11 +92,10 @@ transition:0.4s;
 transform:scale(1.1);
 }
 
-/* LLUVIA DE CORAZONES */
+/* CORAZONES */
 .heart{
 position:fixed;
 top:-10px;
-font-size:20px;
 animation:fall 4s linear forwards;
 }
 
@@ -156,13 +133,10 @@ pointer-events:auto;
 font-size:3rem;
 color:#8a004f;
 }
-
 </style>
 </head>
 
 <body>
-
-<div class="stars" id="stars"></div>
 
 <!-- ESCENA 1 -->
 <section id="scene1">
@@ -178,7 +152,7 @@ color:#8a004f;
 <button class="primary" onclick="nextScene(3)">Continuar</button>
 </section>
 
-<!-- ESCENA 3 GALERÍA -->
+<!-- ESCENA 3 -->
 <section id="scene3" class="hidden">
 <h1>Nuestros Momentos ❤️</h1>
 <div class="gallery">
@@ -196,7 +170,7 @@ color:#8a004f;
 <button class="secondary" id="noBtn">No 😏</button>
 </section>
 
-<!-- PANTALLA FINAL -->
+<!-- FINAL -->
 <div class="final-screen" id="finalScreen">
 <h1>Te amo mi amor 💙</h1>
 <p style="margin-top:20px; font-size:1.5rem;">Atte. Castillo 💚</p>
@@ -208,6 +182,10 @@ color:#8a004f;
 function nextScene(scene){
 document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
 document.getElementById("scene"+scene).classList.remove("hidden");
+
+if(scene !== 1){
+stopRain();
+}
 }
 
 /* BOTÓN QUE HUYE */
@@ -218,21 +196,27 @@ noBtn.style.top=Math.random()*80+"%";
 noBtn.style.left=Math.random()*80+"%";
 });
 
-/* ESTRELLAS */
-function createStars(){
-const starsContainer=document.getElementById("stars");
-for(let i=0;i<120;i++){
-const star=document.createElement("div");
-star.classList.add("star");
-star.style.top=Math.random()*100+"%";
-star.style.left=Math.random()*100+"%";
-star.style.animationDuration=(Math.random()*2+1)+"s";
-starsContainer.appendChild(star);
-}
-}
-createStars();
+/* LLUVIA SUAVE ESCENA 1 */
+let rainInterval;
 
-/* LLUVIA DE CORAZONES + FINAL */
+function startRain(){
+rainInterval = setInterval(()=>{
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*15+15)+"px";
+heart.style.opacity="0.7";
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove();},4000);
+},400);
+}
+
+function stopRain(){
+clearInterval(rainInterval);
+}
+
+/* LLUVIA INTENSA FINAL */
 function createHeart(){
 const heart=document.createElement("div");
 heart.classList.add("heart");
@@ -251,6 +235,9 @@ setTimeout(()=>{
 document.getElementById("finalScreen").classList.add("show");
 },1500);
 }
+
+/* INICIAR LLUVIA AL CARGAR */
+startRain();
 
 </script>
 
