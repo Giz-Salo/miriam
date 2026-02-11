@@ -9,32 +9,33 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-background:black;
+background:#ffd6e8; /* ROSA PASTEL */
 color:white;
 font-family:'Poppins',sans-serif;
 overflow:hidden;
 }
 
-/* Fondo estrellas */
+/* ESTRELLAS */
 .stars{
 position:fixed;
 width:100%;
 height:100%;
-background:transparent;
 z-index:-1;
 }
 
 .star{
 position:absolute;
-width:2px;
-height:2px;
+width:3px;
+height:3px;
 background:white;
+border-radius:50%;
 animation:twinkle 2s infinite alternate;
 }
 
 @keyframes twinkle{
-from{opacity:0.2;}
+from{opacity:0.3;}
 to{opacity:1;}
 }
 
@@ -60,6 +61,11 @@ h1{
 font-family:'Playfair Display',serif;
 font-size:2.5rem;
 margin-bottom:20px;
+color:#8a004f;
+}
+
+p{
+color:#6b0040;
 }
 
 button{
@@ -87,21 +93,7 @@ color:#ff2e63;
 position:relative;
 }
 
-/* Lluvia de corazones */
-.heart{
-position:fixed;
-top:-10px;
-font-size:20px;
-animation:fall 4s linear forwards;
-}
-
-@keyframes fall{
-to{
-transform:translateY(100vh);
-opacity:0;
-}
-}
-
+/* GALERÍA */
 .gallery{
 display:flex;
 gap:10px;
@@ -121,6 +113,50 @@ transition:0.4s;
 .gallery img:hover{
 transform:scale(1.1);
 }
+
+/* LLUVIA DE CORAZONES */
+.heart{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall 4s linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+opacity:0;
+}
+}
+
+/* PANTALLA FINAL */
+.final-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#ffd6e8;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+opacity:0;
+pointer-events:none;
+transition:1s;
+}
+
+.final-screen.show{
+opacity:1;
+pointer-events:auto;
+}
+
+.final-screen h1{
+font-size:3rem;
+color:#8a004f;
+}
+
 </style>
 </head>
 
@@ -138,17 +174,17 @@ transform:scale(1.1);
 <!-- ESCENA 2 -->
 <section id="scene2" class="hidden">
 <h1>Desde que llegaste a mi vida...</h1>
-<p>Todo se siente diferente. Más bonito. Más real.</p>
+<p>Todo se siente más bonito, más real.</p>
 <button class="primary" onclick="nextScene(3)">Continuar</button>
 </section>
 
-<!-- ESCENA 3 -->
+<!-- ESCENA 3 GALERÍA -->
 <section id="scene3" class="hidden">
-<h1>Momentos que guardo en mi corazón</h1>
+<h1>Nuestros Momentos ❤️</h1>
 <div class="gallery">
-<img src="https://picsum.photos/300/400?1">
-<img src="https://picsum.photos/300/400?2">
-<img src="https://picsum.photos/300/400?3">
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
 </div>
 <button class="primary" onclick="nextScene(4)">Tengo una pregunta...</button>
 </section>
@@ -158,18 +194,23 @@ transform:scale(1.1);
 <h1>Miriam, ¿quieres ser mi San Valentín? ❤️</h1>
 <button class="primary" onclick="yesAnswer()">Sí ❤️</button>
 <button class="secondary" id="noBtn">No 😏</button>
-<p id="finalMessage" style="margin-top:20px;"></p>
 </section>
+
+<!-- PANTALLA FINAL -->
+<div class="final-screen" id="finalScreen">
+<h1>Te amo Miriam 💖</h1>
+<p style="margin-top:20px; font-size:1.5rem;">Att. Castillo 💚</p>
+</div>
 
 <script>
 
-/* Cambio de escenas */
+/* CAMBIO ESCENAS */
 function nextScene(scene){
 document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
 document.getElementById("scene"+scene).classList.remove("hidden");
 }
 
-/* Botón que huye */
+/* BOTÓN QUE HUYE */
 const noBtn=document.getElementById("noBtn");
 noBtn.addEventListener("mouseover",()=>{
 noBtn.style.position="absolute";
@@ -177,10 +218,10 @@ noBtn.style.top=Math.random()*80+"%";
 noBtn.style.left=Math.random()*80+"%";
 });
 
-/* Fondo estrellas */
+/* ESTRELLAS */
 function createStars(){
 const starsContainer=document.getElementById("stars");
-for(let i=0;i<100;i++){
+for(let i=0;i<120;i++){
 const star=document.createElement("div");
 star.classList.add("star");
 star.style.top=Math.random()*100+"%";
@@ -191,27 +232,27 @@ starsContainer.appendChild(star);
 }
 createStars();
 
-/* Lluvia de corazones */
+/* LLUVIA DE CORAZONES + FINAL */
 function createHeart(){
 const heart=document.createElement("div");
 heart.classList.add("heart");
-heart.innerHTML="❤️";
+heart.innerHTML="💖";
 heart.style.left=Math.random()*100+"vw";
-heart.style.fontSize=(Math.random()*20+15)+"px";
+heart.style.fontSize=(Math.random()*25+20)+"px";
 document.body.appendChild(heart);
 setTimeout(()=>{heart.remove();},4000);
 }
 
 function yesAnswer(){
-document.getElementById("finalMessage").innerText=
-"Sabía que dirías que sí 😌 Te amo Miriam ❤️ - Castillo";
-
-for(let i=0;i<50;i++){
-setTimeout(createHeart,i*100);
+for(let i=0;i<80;i++){
+setTimeout(createHeart,i*80);
 }
+setTimeout(()=>{
+document.getElementById("finalScreen").classList.add("show");
+},1500);
 }
 
 </script>
 
 </body>
-  </html>
+</html>
