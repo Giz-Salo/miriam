@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miriam ❤️ Castillo</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+background:black;
+color:white;
+font-family:'Poppins',sans-serif;
+overflow:hidden;
+}
+
+/* Fondo estrellas */
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:transparent;
+z-index:-1;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.2;}
+to{opacity:1;}
+}
+
+section{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+transition:1s;
+}
+
+.hidden{
+opacity:0;
+pointer-events:none;
+}
+
+h1{
+font-family:'Playfair Display',serif;
+font-size:2.5rem;
+margin-bottom:20px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+border-radius:30px;
+margin:10px;
+cursor:pointer;
+font-size:1rem;
+transition:0.3s;
+}
+
+.primary{
+background:#ff2e63;
+color:white;
+}
+
+.primary:hover{
+transform:scale(1.1);
+}
+
+.secondary{
+background:white;
+color:#ff2e63;
+position:relative;
+}
+
+/* Lluvia de corazones */
+.heart{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall 4s linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh);
+opacity:0;
+}
+}
+
+.gallery{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:20px;
+}
+
+.gallery img{
+width:120px;
+height:170px;
+object-fit:cover;
+border-radius:15px;
+transition:0.4s;
+}
+
+.gallery img:hover{
+transform:scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- ESCENA 1 -->
+<section id="scene1">
+<h1>Miriam...</h1>
+<p>Hay algo que quiero decirte ❤️</p>
+<button class="primary" onclick="nextScene(2)">Descubrir</button>
+</section>
+
+<!-- ESCENA 2 -->
+<section id="scene2" class="hidden">
+<h1>Desde que llegaste a mi vida...</h1>
+<p>Todo se siente diferente. Más bonito. Más real.</p>
+<button class="primary" onclick="nextScene(3)">Continuar</button>
+</section>
+
+<!-- ESCENA 3 -->
+<section id="scene3" class="hidden">
+<h1>Momentos que guardo en mi corazón</h1>
+<div class="gallery">
+<img src="https://picsum.photos/300/400?1">
+<img src="https://picsum.photos/300/400?2">
+<img src="https://picsum.photos/300/400?3">
+</div>
+<button class="primary" onclick="nextScene(4)">Tengo una pregunta...</button>
+</section>
+
+<!-- ESCENA 4 -->
+<section id="scene4" class="hidden">
+<h1>Miriam, ¿quieres ser mi San Valentín? ❤️</h1>
+<button class="primary" onclick="yesAnswer()">Sí ❤️</button>
+<button class="secondary" id="noBtn">No 😏</button>
+<p id="finalMessage" style="margin-top:20px;"></p>
+</section>
+
+<script>
+
+/* Cambio de escenas */
+function nextScene(scene){
+document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
+document.getElementById("scene"+scene).classList.remove("hidden");
+}
+
+/* Botón que huye */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+noBtn.style.position="absolute";
+noBtn.style.top=Math.random()*80+"%";
+noBtn.style.left=Math.random()*80+"%";
+});
+
+/* Fondo estrellas */
+function createStars(){
+const starsContainer=document.getElementById("stars");
+for(let i=0;i<100;i++){
+const star=document.createElement("div");
+star.classList.add("star");
+star.style.top=Math.random()*100+"%";
+star.style.left=Math.random()*100+"%";
+star.style.animationDuration=(Math.random()*2+1)+"s";
+starsContainer.appendChild(star);
+}
+}
+createStars();
+
+/* Lluvia de corazones */
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(Math.random()*20+15)+"px";
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove();},4000);
+}
+
+function yesAnswer(){
+document.getElementById("finalMessage").innerText=
+"Sabía que dirías que sí 😌 Te amo Miriam ❤️ - Castillo";
+
+for(let i=0;i<50;i++){
+setTimeout(createHeart,i*100);
+}
+}
+
+</script>
+
+</body>
+  </html>
