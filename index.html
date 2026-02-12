@@ -14,26 +14,9 @@ body{
 background:#ffd6e8;
 font-family:'Poppins',sans-serif;
 overflow:hidden;
-text-align:center;
 }
 
-/* LLUVIA DE CORAZONES */
-.heart{
-position:fixed;
-top:-10px;
-font-size:20px;
-animation:fall linear forwards;
-pointer-events:none;
-}
-
-@keyframes fall{
-to{
-transform:translateY(110vh);
-opacity:0;
-}
-}
-
-/* ESCENA */
+/* ESCENAS */
 section{
 position:absolute;
 width:100%;
@@ -42,7 +25,14 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+text-align:center;
 padding:20px;
+transition:1s;
+}
+
+.hidden{
+opacity:0;
+pointer-events:none;
 }
 
 h1{
@@ -75,6 +65,37 @@ color:white;
 background:white;
 color:#ff2e63;
 position:absolute;
+}
+
+/* GALERÍA */
+.gallery{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.gallery img{
+width:120px;
+height:170px;
+object-fit:cover;
+border-radius:15px;
+}
+
+/* LLUVIA */
+.heart{
+position:fixed;
+top:-10px;
+font-size:20px;
+animation:fall linear forwards;
+pointer-events:none;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh);
+opacity:0;
+}
 }
 
 /* OVERLAY */
@@ -123,7 +144,6 @@ from{transform:rotate(0deg);}
 to{transform:rotate(360deg);}
 }
 
-/* CARTA */
 .letter{
 max-width:500px;
 margin-top:20px;
@@ -156,10 +176,34 @@ color:white;
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<section>
-<h1>Miriam… 💚</h1>
-<p>Hay algo muy importante que quiero preguntarte...</p>
+<!-- ESCENA 1 -->
+<section id="scene1">
+<h1>Mi amor 💚</h1>
+<p>Hay algo que quiero decirte...</p>
+<button class="primary" onclick="nextScene(2)">Descubrir</button>
+</section>
 
+<!-- ESCENA 2 -->
+<section id="scene2" class="hidden">
+<h1>Desde que llegaste...</h1>
+<p>Mi vida es más bonita contigo.</p>
+<button class="primary" onclick="nextScene(3)">Continuar</button>
+</section>
+
+<!-- ESCENA 3 -->
+<section id="scene3" class="hidden">
+<h1>Nuestros momentos ❤️</h1>
+<div class="gallery">
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+</div>
+<button class="primary" onclick="nextScene(4)">Tengo una pregunta...</button>
+</section>
+
+<!-- ESCENA 4 -->
+<section id="scene4" class="hidden">
+<h1>Miriam, ¿Quieres ser mi San Valentín? ❤️</h1>
 <button class="primary" id="yesBtn">Sí ❤️</button>
 <button class="secondary" id="noBtn">No 😏</button>
 </section>
@@ -175,27 +219,30 @@ color:white;
 Mi hermosa Miriam…<br><br>
 Desde aquel 25 de diciembre de 2025 mi vida cambió por completo.  
 Llegaste como el regalo más bonito que pudo darme la vida.  
-Gracias por tu ternura, tu sonrisa y cada momento que compartimos.  
-Si esto es apenas el inicio, no puedo imaginar lo maravilloso que será nuestro futuro.  
+Gracias por tu ternura y cada momento juntos.  
 <br><br>
 Siempre tuyo,<br>
 Castillo 💚
 </p>
-
 <div class="counter" id="counter"></div>
-<p style="margin-top:20px;">Att. Castillo 💚</p>
 </div>
 </div>
 
 <script>
 
-/* 🎵 Música opción 2 */
+/* Música */
 const music = document.getElementById("bgMusic");
 document.addEventListener("click", function(){
   music.play();
 }, { once: true });
 
-/* ❤️ Lluvia constante */
+/* Cambio escenas */
+function nextScene(scene){
+document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
+document.getElementById("scene"+scene).classList.remove("hidden");
+}
+
+/* Lluvia */
 function createHeart(){
 const heart=document.createElement("div");
 heart.classList.add("heart");
@@ -208,7 +255,7 @@ setTimeout(()=>{heart.remove();},5000);
 }
 setInterval(createHeart,300);
 
-/* BOTONES */
+/* Botones */
 const noBtn=document.getElementById("noBtn");
 const yesBtn=document.getElementById("yesBtn");
 
@@ -253,13 +300,12 @@ document.getElementById("letter").classList.add("show");
 },3000);
 });
 
-/* ⏳ Contador */
+/* Contador */
 function updateCounter(){
 const startDate=new Date("2025-12-25");
 const now=new Date();
 const diff=now-startDate;
 const days=Math.floor(diff/(1000*60*60*24));
-
 document.getElementById("counter").innerText=
 "Llevamos juntos "+days+" días 💚";
 }
