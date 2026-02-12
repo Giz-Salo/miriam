@@ -5,28 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miriam ❤️ Castillo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
 body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
   background:#ffd6e8;
-  font-family:'Poppins',sans-serif;
   overflow:hidden;
   text-align:center;
 }
 
-/* SECCIONES */
 section{
   position:absolute;
-  inset:0;
+  width:100%;
+  height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:30px;
-  transition:opacity .8s ease;
+  transition:opacity 0.8s;
+  padding:20px;
 }
 
 .hidden{
@@ -34,27 +31,23 @@ section{
   pointer-events:none;
 }
 
-/* TIPOGRAFÍA */
 h1{
-  font-family:'Playfair Display',serif;
   color:#8a004f;
-  margin-bottom:15px;
-  font-size:2rem;
 }
 
 p{
   color:#6b0040;
-  margin-bottom:20px;
+  max-width:600px;
 }
 
-/* BOTONES */
 button{
-  padding:12px 28px;
+  padding:12px 25px;
   border:none;
   border-radius:30px;
-  font-size:16px;
+  margin:10px;
+  font-size:18px;
   cursor:pointer;
-  transition:.3s ease;
+  transition:0.4s;
 }
 
 .primary{
@@ -62,8 +55,9 @@ button{
   color:white;
 }
 
-.primary:hover{
-  transform:scale(1.1);
+.secondary{
+  background:white;
+  color:#ff2e63;
 }
 
 .buttons{
@@ -76,21 +70,11 @@ button{
   height:220px;
 }
 
-.secondary{
-  background:white;
-  color:#ff2e63;
-  position:absolute;
-  left:150px;
-  top:40px;
-}
-
-/* GALERÍA */
 .gallery{
   display:flex;
   gap:15px;
   flex-wrap:wrap;
   justify-content:center;
-  margin:20px 0;
 }
 
 .gallery img{
@@ -98,14 +82,13 @@ button{
   height:170px;
   object-fit:cover;
   border-radius:15px;
-  transition:.3s;
+  transition:0.3s;
 }
 
 .gallery img:hover{
   transform:scale(1.1);
 }
 
-/* CORAZONES */
 .heart{
   position:fixed;
   top:-10px;
@@ -124,6 +107,11 @@ button{
 </head>
 
 <body>
+
+<!-- 🎵 Música -->
+<audio id="bgMusic" autoplay loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
 
 <!-- ESCENA 1 -->
 <section id="scene1">
@@ -155,15 +143,20 @@ button{
   <h1>Miriam, ¿Quieres ser mi San Valentín? ❤️</h1>
 
   <div class="buttons">
-    <button class="primary" id="yesBtn" style="position:absolute; left:0; top:40px;">Sí ❤️</button>
+    <button class="primary" id="yesBtn">Sí ❤️</button>
     <button class="secondary" id="noBtn">No 😏</button>
   </div>
 </section>
 
 <!-- FINAL -->
 <section id="final" class="hidden">
-  <h1>Te amo Miriam 💚</h1>
-  <p>Att. Castillo 💚</p>
+  <h1 style="font-size:40px;">Sabía que dirías que sí 💚</h1>
+  <p style="font-size:22px;">
+    Gracias por existir en mi vida.  
+    No solo quiero un San Valentín contigo…  
+    quiero muchos momentos más a tu lado. ✨
+  </p>
+  <h2 style="margin-top:30px;">Att. Castillo 💚</h2>
 </section>
 
 <script>
@@ -174,7 +167,7 @@ function nextScene(num){
   document.getElementById("scene"+num).classList.remove("hidden");
 }
 
-// Lluvia constante
+// Lluvia constante de corazones
 function createHeart(){
   const heart=document.createElement("div");
   heart.className="heart";
@@ -202,23 +195,20 @@ const frases = [
 ];
 
 noBtn.addEventListener("click", () => {
+
   noClicks++;
-
-  // El botón SI crece
   yesScale += 0.5;
-  yesBtn.style.transform = "scale(" + yesScale + ")";
-  yesBtn.style.transition = "0.4s";
 
-  // Cambia frase
+  yesBtn.style.transform = "scale(" + yesScale + ")";
+
   if(noClicks <= frases.length){
     noBtn.innerText = frases[noClicks - 1];
   }
 
-  // Movimiento solo horizontal para que no tape texto
-  noBtn.style.position = "relative";
+  // Movimiento lateral
   noBtn.style.left = (Math.random() * 120 - 60) + "px";
 
-  // Si crece demasiado, que cubra pantalla
+  // Cuando crece demasiado cubre pantalla
   if(yesScale >= 6){
     yesBtn.style.position = "fixed";
     yesBtn.style.top = "0";
@@ -228,19 +218,31 @@ noBtn.addEventListener("click", () => {
     yesBtn.style.borderRadius = "0";
     yesBtn.style.fontSize = "50px";
   }
+
 });
 
 yesBtn.addEventListener("click", () => {
-  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-  document.getElementById("final").classList.remove("hidden");
-});
 
-yesBtn.addEventListener("click",()=>{
-  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-  document.getElementById("final").classList.remove("hidden");
+  // Explosión final
+  for(let i=0; i<40; i++){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💚";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(Math.random()*30+20)+"px";
+    heart.style.animationDuration="2s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),2000);
+  }
+
+  setTimeout(()=>{
+    document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+    document.getElementById("final").classList.remove("hidden");
+  },1500);
+
 });
 
 </script>
 
 </body>
-  </html>
+</html>
