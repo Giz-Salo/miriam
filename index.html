@@ -27,7 +27,7 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
-transition:1s;
+transition:opacity 1s;
 }
 
 .hidden{
@@ -230,19 +230,26 @@ Castillo 💚
 
 <script>
 
-/* Música */
+/* 🎵 Música */
 const music = document.getElementById("bgMusic");
 document.addEventListener("click", function(){
   music.play();
 }, { once: true });
 
-/* Cambio escenas */
+/* 🔄 Cambio de escenas */
 function nextScene(scene){
-document.querySelectorAll("section").forEach(sec=>sec.classList.add("hidden"));
-document.getElementById("scene"+scene).classList.remove("hidden");
+  const sections = document.querySelectorAll("section");
+  sections.forEach(function(sec){
+    sec.classList.add("hidden");
+  });
+
+  const next = document.getElementById("scene" + scene);
+  if(next){
+    next.classList.remove("hidden");
+  }
 }
 
-/* Lluvia */
+/* ❤️ Lluvia constante */
 function createHeart(){
 const heart=document.createElement("div");
 heart.classList.add("heart");
@@ -255,7 +262,7 @@ setTimeout(()=>{heart.remove();},5000);
 }
 setInterval(createHeart,300);
 
-/* Botones */
+/* 😏 Botones */
 const noBtn=document.getElementById("noBtn");
 const yesBtn=document.getElementById("yesBtn");
 
@@ -272,10 +279,11 @@ const phrases=[
 
 noBtn.addEventListener("click",()=>{
 noClicks++;
+
 yesSize+=0.5;
 yesBtn.style.transform="scale("+yesSize+")";
 
-if(noClicks<phrases.length){
+if(noClicks<=phrases.length){
 noBtn.innerText=phrases[noClicks-1];
 }
 
@@ -300,12 +308,13 @@ document.getElementById("letter").classList.add("show");
 },3000);
 });
 
-/* Contador */
+/* ⏳ Contador */
 function updateCounter(){
 const startDate=new Date("2025-12-25");
 const now=new Date();
 const diff=now-startDate;
 const days=Math.floor(diff/(1000*60*60*24));
+
 document.getElementById("counter").innerText=
 "Llevamos juntos "+days+" días 💚";
 }
