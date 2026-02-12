@@ -3,248 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Miriam ❤️ Castillo</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+<title>Prueba Botón</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-  background:#ffd6e8;
-  font-family:'Poppins',sans-serif;
-  overflow:hidden;
-  text-align:center;
-}
-
-section{
-  position:absolute;
-  width:100%;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-  transition:opacity 0.8s;
-}
-
-.hidden{
-  opacity:0;
-  pointer-events:none;
-}
-
-h1{
-  font-family:'Playfair Display',serif;
-  color:#8a004f;
-  margin-bottom:20px;
-}
-
-p{
-  color:#6b0040;
-  margin-bottom:20px;
-  max-width:500px;
-}
-
-/* BOTONES */
-.buttons{
-  margin-top:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
-  position:relative;
-  height:200px;
-}
-
-button{
-  padding:14px 30px;
-  border:none;
-  border-radius:30px;
-  cursor:pointer;
-  font-size:1rem;
-  transition:0.3s;
-}
-
-.primary{
-  background:#ff2e63;
-  color:white;
-}
-
-.secondary{
-  background:white;
-  color:#ff2e63;
-  position:absolute;
-}
-
-/* GALERÍA */
-.gallery{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.gallery img{
-  width:120px;
-  height:170px;
-  object-fit:cover;
-  border-radius:15px;
-}
-
-/* CORAZONES */
-.heart{
-  position:fixed;
-  top:-10px;
-  font-size:20px;
-  animation:fall linear forwards;
-  pointer-events:none;
-}
-
-@keyframes fall{
-  to{
-    transform:translateY(110vh);
-    opacity:0;
-  }
-}
-
-/* FINAL */
-.final-screen{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  opacity:0;
-  transition:1s;
-  z-index:10;
-}
-
-.final-screen.show{
-  opacity:1;
-}
-
-.counter{
-  margin-top:15px;
-  font-size:1.1rem;
-  color:white;
-}
+section{height:100vh; display:flex; justify-content:center; align-items:center; flex-direction:column;}
+.hidden{display:none;}
 </style>
 </head>
-
 <body>
 
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
 <section id="scene1">
-  <h1>Mi amor 💚</h1>
-  <p>Hay algo que quiero decirte...</p>
-  <button class="primary" onclick="nextScene(2)">Descubrir</button>
+  <h1>Escena 1</h1>
+  <button onclick="nextScene(2)">Descubrir</button>
 </section>
 
 <section id="scene2" class="hidden">
-  <h1>Desde que llegaste...</h1>
-  <p>Mi vida es más bonita contigo.</p>
-  <button class="primary" onclick="nextScene(3)">Continuar</button>
+  <h1>Escena 2</h1>
 </section>
-
-<section id="scene3" class="hidden">
-  <h1>Nuestros momentos ❤️</h1>
-  <div class="gallery">
-    <img src="foto1.jpg">
-    <img src="foto2.jpg">
-    <img src="foto3.jpg">
-  </div>
-  <button class="primary" onclick="nextScene(4)">Tengo una pregunta...</button>
-</section>
-
-<section id="scene4" class="hidden">
-  <h1>Miriam, ¿Quieres ser mi San Valentín? ❤️</h1>
-  <div class="buttons">
-    <button class="primary" id="yesBtn">Sí ❤️</button>
-    <button class="secondary" id="noBtn">No 😏</button>
-  </div>
-</section>
-
-<div class="final-screen" id="finalScreen">
-  <h1>Te amo Miriam 💚</h1>
-  <div class="counter" id="counter"></div>
-</div>
 
 <script>
-// Música
-const music = document.getElementById("bgMusic");
-document.addEventListener("click", () => music.play(), { once: true });
-
-// Cambiar escenas
 function nextScene(scene){
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
   document.getElementById("scene"+scene).classList.remove("hidden");
 }
-
-// Lluvia de corazones
-function createHeart(){
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=(Math.random()*3+2)+"s";
-  document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(),5000);
-}
-setInterval(createHeart,300);
-
-// Botones traviesos
-let noClicks = 0, yesSize = 1;
-const phrases = [
-  "¿Segura? 😢",
-  "Di que sí… 💚",
-  "Me pondré triste 🥺",
-  "No seas malita 😏",
-  "Ya no podrás decir que no 😌"
-];
-
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-
-noBtn.addEventListener("click", ()=>{
-  noClicks++;
-  yesSize += 0.5;
-  yesBtn.style.transform = "scale("+yesSize+")";
-
-  if(noClicks < phrases.length){
-    noBtn.innerText = phrases[noClicks-1];
-  }
-
-  noBtn.style.top=Math.random()*120+"px";
-  noBtn.style.left=Math.random()*150+"px";
-
-  if(noClicks >= 5){
-    noBtn.style.display="none";
-    yesBtn.style.transform="scale(8)";
-  }
-});
-
-yesBtn.addEventListener("click", ()=>{
-  yesBtn.style.transform="scale(15)";
-  setTimeout(()=> document.getElementById("finalScreen").classList.add("show"), 1000);
-});
-
-// Contador de días juntos
-function updateCounter(){
-  const start=new Date("2025-12-25"), now=new Date();
-  const diff=now-start;
-  const days=Math.floor(diff/(1000*60*60*24));
-  document.getElementById("counter").innerText="Llevamos juntos "+days+" días 💚";
-}
-updateCounter();
 </script>
 
 </body>
