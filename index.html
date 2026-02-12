@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miriam ❤️ Castillo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
 body{
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
   background:#ffd6e8;
-  font-family:'Poppins',sans-serif;
   overflow:hidden;
   text-align:center;
 }
@@ -24,47 +22,38 @@ section{
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  transition:opacity 0.8s, visibility 0.8s;
   padding:20px;
-  transition:opacity 0.8s ease;
+  background:#ffd6e8;
 }
 
-/* Fix para GitHub: Las escenas ocultas no deben bloquear clics ni verse */
-.hidden {
-  opacity: 0 !important;
+/* FIX: Evita que las capas invisibles bloqueen los botones */
+.hidden{
+  opacity:0 !important;
   visibility: hidden !important;
-  pointer-events: none !important;
+  pointer-events:none !important;
 }
 
 h1{
-  font-family:'Playfair Display',serif;
   color:#8a004f;
-  margin-bottom:20px;
+  margin-bottom: 15px;
 }
 
 p{
   color:#6b0040;
-  margin-bottom:20px;
-  max-width:500px;
-}
-
-.buttons{
-  margin-top:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
-  position:relative;
-  height:250px; /* Un poco más de espacio para el botón travieso */
+  max-width:600px;
+  line-height: 1.5;
 }
 
 button{
-  padding:14px 30px;
+  padding:12px 25px;
   border:none;
   border-radius:30px;
+  margin:10px;
+  font-size:18px;
   cursor:pointer;
-  font-size:1rem;
-  transition:0.3s;
-  z-index: 5;
+  transition:0.4s;
+  z-index: 10;
 }
 
 .primary{
@@ -75,13 +64,22 @@ button{
 .secondary{
   background:white;
   color:#ff2e63;
-  position:absolute;
-  top: 60px; /* Posición inicial */
+  position: relative;
+}
+
+.buttons{
+  margin-top:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:15px;
+  position:relative;
+  min-height:280px;
 }
 
 .gallery{
   display:flex;
-  gap:10px;
+  gap:15px;
   flex-wrap:wrap;
   justify-content:center;
   margin-bottom: 20px;
@@ -92,7 +90,7 @@ button{
   height:170px;
   object-fit:cover;
   border-radius:15px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .heart{
@@ -111,34 +109,15 @@ button{
   }
 }
 
-.final-screen{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: #ff2e63;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  opacity:0;
-  visibility: hidden;
-  transition:1.5s;
-  z-index:1000;
-}
-
-.final-screen.show{
-  opacity:1;
-  visibility: visible;
-}
-
-.counter{
-  margin-top:15px;
-  font-size:1.1rem;
-  color:white;
-  font-weight: 300;
+#counter {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ff2e63;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  display: inline-block;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 </style>
 </head>
@@ -146,7 +125,7 @@ button{
 <body>
 
 <audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
 <section id="scene1">
@@ -156,17 +135,17 @@ button{
 </section>
 
 <section id="scene2" class="hidden">
-  <h1>Desde que llegaste...</h1>
-  <p>Mi vida es más bonita contigo.</p>
-  <button class="primary" onclick="nextScene(3)">Continuar</button>
+  <h1>Miriam...</h1>
+  <p>Antes de preguntarte algo...</p>
+  <button class="primary" onclick="nextScene(3)">Ver nuestros momentos ❤️</button>
 </section>
 
 <section id="scene3" class="hidden">
-  <h1>Nuestros momentos ❤️</h1>
+  <h1>Nuestros Momentos 💕</h1>
   <div class="gallery">
-    <img src="foto1.jpg" alt="Nosotros 1">
-    <img src="foto2.jpg" alt="Nosotros 2">
-    <img src="foto3.jpg" alt="Nosotros 3">
+    <img src="foto1.jpg" alt="Foto 1">
+    <img src="foto2.jpg" alt="Foto 2">
+    <img src="foto3.jpg" alt="Foto 3">
   </div>
   <button class="primary" onclick="nextScene(4)">Tengo una pregunta...</button>
 </section>
@@ -179,99 +158,84 @@ button{
   </div>
 </section>
 
-<div class="final-screen" id="finalScreen">
-  <h1>¡Te amo Miriam! 💚</h1>
-  <div class="counter" id="counter"></div>
-</div>
+<section id="final" class="hidden">
+  <h1 style="font-size:40px;">Sabía que dirías que sí 💚</h1>
+  <p style="font-size:22px;">
+    Gracias por existir en mi vida.<br>
+    No solo quiero un San Valentín contigo…<br>
+    quiero muchos momentos más a tu lado. ✨
+  </p>
+  <div id="counter">Cargando días...</div>
+  <h2 style="margin-top:30px;">Att. Castillo 💚</h2>
+</section>
 
 <script>
+// --- CONFIGURACIÓN DEL CONTADOR ---
+// Cambia la fecha aquí: (Año, Mes-1, Día) -> Enero es 0, Diciembre es 11
+const fechaInicio = new Date(2025, 11, 25); 
+
 // Música
 const music = document.getElementById("bgMusic");
 document.addEventListener("click", () => {
-    music.play().catch(e => console.log("La música requiere interacción previa"));
+    music.play().catch(() => {});
 }, { once: true });
 
-// Cambiar escenas
-function nextScene(sceneNumber){
-  // Ocultamos todas las secciones
+// Cambio de escenas
+function nextScene(num){
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-  // Mostramos solo la que queremos
-  document.getElementById("scene"+sceneNumber).classList.remove("hidden");
+  const nextId = (num === 'final') ? "final" : "scene" + num;
+  document.getElementById(nextId).classList.remove("hidden");
+  
+  if(num === 'final') updateCounter();
 }
 
 // Lluvia de corazones
-function createHeart(){
+function createHeart(symbol = "❤️"){
   const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML="❤️";
-  heart.style.left=Math.random()*100+"vw";
-  heart.style.animationDuration=(Math.random()*3+2)+"s";
+  heart.className = "heart";
+  heart.innerHTML = symbol;
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
   document.body.appendChild(heart);
-  setTimeout(()=>heart.remove(), 5000);
+  setTimeout(() => heart.remove(), 5000);
 }
-setInterval(createHeart, 400);
+setInterval(createHeart, 300);
 
 // Lógica de botones
 let noClicks = 0;
-let yesSize = 1;
-const phrases = [
-  "¿Segura? 😢",
-  "Di que sí… 💚",
-  "Me pondré triste 🥺",
-  "No seas malita 😏",
-  "¡Ya no puedes decir que no! 😌"
-];
+let yesScale = 1;
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-noBtn.addEventListener("click", ()=>{
+const frases = ["¿Segura? 😢", "Piénsalo bien 🥺", "Yo te amo 💚", "No seas malita 😏", "Última oportunidad 😅"];
+
+noBtn.addEventListener("click", () => {
   noClicks++;
+  yesScale += 0.5;
+  yesBtn.style.transform = "scale(" + yesScale + ")";
+  if(noClicks <= frases.length) noBtn.innerText = frases[noClicks - 1];
   
-  // Agrandar el botón SÍ
-  yesSize += 0.4;
-  yesBtn.style.transform = "scale("+yesSize+")";
-
-  // Cambiar texto del botón NO
-  if(noClicks <= phrases.length){
-    noBtn.innerText = phrases[noClicks-1];
-  }
-
-  // Mover botón NO de forma aleatoria
-  const x = Math.random() * 150 - 75;
-  const y = Math.random() * 150 - 75;
+  const x = Math.random() * 100 - 50;
+  const y = Math.random() * 100 - 50;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
-
-  if(noClicks >= 6){
-    noBtn.style.display="none";
-  }
+  if(noClicks >= 6) noBtn.style.display = "none";
 });
 
-yesBtn.addEventListener("click", ()=>{
-  yesBtn.style.transform="scale(30)";
-  yesBtn.style.opacity="0";
-  setTimeout(()=> {
-    document.getElementById("finalScreen").classList.add("show");
-  }, 500);
+yesBtn.addEventListener("click", () => {
+  for(let i=0; i<30; i++) setTimeout(() => createHeart("💚"), i * 50);
+  yesBtn.style.transform = "scale(50)";
+  yesBtn.style.opacity = "0";
+  setTimeout(() => nextScene('final'), 800);
 });
 
-// Contador de días juntos
+// Función del contador
 function updateCounter(){
-  // Formato: Año, Mes (0-11), Día
-  // 2025-12-25 sería: new Date(2025, 11, 25)
-  const start = new Date(2025, 11, 25); 
   const now = new Date();
-  const diff = now - start;
+  const diff = now - fechaInicio;
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  
-  const counterEl = document.getElementById("counter");
-  if(days >= 0) {
-    counterEl.innerText = "Llevamos juntos " + days + " días 💚";
-  } else {
-    counterEl.innerText = "¡Contando los días para estar juntos! 💚";
-  }
+  document.getElementById("counter").innerText = "Llevamos juntos " + days + " días llenos de amor 💚";
 }
-updateCounter();
 </script>
 
 </body>
