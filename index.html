@@ -31,6 +31,14 @@ section{
   pointer-events:none;
 }
 
+h1{
+  color:#8a004f;
+}
+
+p{
+  color:#6b0040;
+}
+
 button{
   padding:12px 25px;
   border:none;
@@ -44,6 +52,18 @@ button{
 .primary{
   background:#ff2e63;
   color:white;
+}
+
+.buttons{
+  position:relative;
+  width:100%;
+  max-width:400px;
+  height:150px;
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
 }
 
 .secondary{
@@ -118,8 +138,12 @@ button{
 <!-- ESCENA 4 PREGUNTA -->
 <section id="scene4" class="hidden">
   <h1>Miriam, ¿Quieres ser mi San Valentín? ❤️</h1>
-  <button class="primary" id="yesBtn">Sí ❤️</button>
-  <button class="secondary" id="noBtn">No 😏</button>
+  
+  <div class="buttons">
+    <button class="primary" id="yesBtn">Sí ❤️</button>
+    <button class="secondary" id="noBtn">No 😏</button>
+  </div>
+  
 </section>
 
 <!-- FINAL -->
@@ -172,8 +196,9 @@ noBtn.addEventListener("click",()=>{
     noBtn.innerText=frases[noClicks-1];
   }
 
-  noBtn.style.top=Math.random()*70+"%";
-  noBtn.style.left=Math.random()*70+"%";
+  // mover solo dentro del contenedor
+  noBtn.style.top=Math.random()*100+"px";
+  noBtn.style.left=Math.random()*200+"px";
 
   if(noClicks>5){
     noBtn.style.display="none";
