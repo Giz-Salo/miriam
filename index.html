@@ -67,10 +67,13 @@ button{
 }
 
 .buttons{
+  margin-top:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:15px;
   position:relative;
-  width:280px;
-  height:120px;
-  margin-top:20px;
+  height:220px;
 }
 
 .secondary{
@@ -184,36 +187,52 @@ function createHeart(){
 setInterval(createHeart,300);
 
 // Botones dinámicos
-let noClicks=0;
-let yesScale=1;
+let noClicks = 0;
+let yesScale = 1;
 
-const noBtn=document.getElementById("noBtn");
-const yesBtn=document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
 
-const frases=[
+const frases = [
   "¿Segura? 😢",
-  "Di que sí 💚",
-  "Me pondré triste 🥺",
+  "Piénsalo bien 🥺",
+  "Yo te amo 💚",
   "No seas malita 😏",
-  "Ya casi desaparezco 😅"
+  "Última oportunidad 😅"
 ];
 
-noBtn.addEventListener("click",()=>{
+noBtn.addEventListener("click", () => {
   noClicks++;
-  yesScale+=0.3;
-  yesBtn.style.transform="scale("+yesScale+")";
 
-  if(noClicks<=frases.length){
-    noBtn.innerText=frases[noClicks-1];
+  // El botón SI crece
+  yesScale += 0.5;
+  yesBtn.style.transform = "scale(" + yesScale + ")";
+  yesBtn.style.transition = "0.4s";
+
+  // Cambia frase
+  if(noClicks <= frases.length){
+    noBtn.innerText = frases[noClicks - 1];
   }
 
-  noBtn.style.left=Math.random()*180+"px";
-  noBtn.style.top=Math.random()*70+"px";
+  // Movimiento solo horizontal para que no tape texto
+  noBtn.style.position = "relative";
+  noBtn.style.left = (Math.random() * 120 - 60) + "px";
 
-  if(noClicks>5){
-    noBtn.style.display="none";
-    yesBtn.style.transform="scale(3.5)";
+  // Si crece demasiado, que cubra pantalla
+  if(yesScale >= 6){
+    yesBtn.style.position = "fixed";
+    yesBtn.style.top = "0";
+    yesBtn.style.left = "0";
+    yesBtn.style.width = "100vw";
+    yesBtn.style.height = "100vh";
+    yesBtn.style.borderRadius = "0";
+    yesBtn.style.fontSize = "50px";
   }
+});
+
+yesBtn.addEventListener("click", () => {
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  document.getElementById("final").classList.remove("hidden");
 });
 
 yesBtn.addEventListener("click",()=>{
