@@ -22,7 +22,6 @@ text-align:center;
 position:fixed;
 top:-10px;
 font-size:20px;
-color:red;
 animation:fall linear forwards;
 pointer-events:none;
 }
@@ -34,7 +33,7 @@ opacity:0;
 }
 }
 
-/* ESCENAS */
+/* ESCENA */
 section{
 position:absolute;
 width:100%;
@@ -44,17 +43,16 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 padding:20px;
-transition:1s;
-}
-
-.hidden{
-opacity:0;
-pointer-events:none;
 }
 
 h1{
 font-family:'Playfair Display',serif;
 color:#8a004f;
+margin-bottom:20px;
+}
+
+p{
+color:#6b0040;
 margin-bottom:20px;
 }
 
@@ -76,10 +74,10 @@ color:white;
 .secondary{
 background:white;
 color:#ff2e63;
-position:relative;
+position:absolute;
 }
 
-/* FADE OSCURO */
+/* OVERLAY */
 .overlay{
 position:fixed;
 top:0;
@@ -90,10 +88,11 @@ background:black;
 opacity:0;
 transition:2s;
 pointer-events:none;
+z-index:5;
 }
 
 /* FINAL */
-.final{
+.final-screen{
 position:fixed;
 top:0;
 left:0;
@@ -106,15 +105,15 @@ align-items:center;
 color:white;
 opacity:0;
 transition:2s;
+z-index:10;
 }
 
-.show{
+.final-screen.show{
 opacity:1;
 }
 
-/* ANILLO */
 .ring{
-font-size:60px;
+font-size:70px;
 margin-top:20px;
 animation:spin 4s linear infinite;
 }
@@ -130,7 +129,7 @@ max-width:500px;
 margin-top:20px;
 background:white;
 color:#8a004f;
-padding:20px;
+padding:25px;
 border-radius:20px;
 opacity:0;
 transform:translateY(50px);
@@ -142,10 +141,10 @@ opacity:1;
 transform:translateY(0);
 }
 
-/* CONTADOR */
 .counter{
 margin-top:15px;
-font-size:1.2rem;
+font-size:1.1rem;
+color:white;
 }
 
 </style>
@@ -157,45 +156,46 @@ font-size:1.2rem;
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<div class="overlay" id="overlay"></div>
-
-<section id="scene1">
+<section>
 <h1>Miriam… 💚</h1>
 <p>Hay algo muy importante que quiero preguntarte...</p>
+
 <button class="primary" id="yesBtn">Sí ❤️</button>
 <button class="secondary" id="noBtn">No 😏</button>
 </section>
 
-<div class="final" id="finalScreen">
+<div class="overlay" id="overlay"></div>
+
+<div class="final-screen" id="finalScreen">
 <h1>Te amo Miriam 💚</h1>
 <div class="ring">💍</div>
 
 <div class="letter" id="letter">
 <p>
 Mi hermosa Miriam…<br><br>
-Desde aquel 25 de diciembre de 2025, mi vida cambió para siempre.  
-Llegaste como un regalo inesperado, como magia en pleno invierno.  
-Contigo aprendí que el amor no solo se siente… se construye, se cuida y se disfruta.  
-Gracias por tu sonrisa, por tu ternura y por cada momento que compartimos.  
-Si este es nuestro comienzo, no puedo imaginar lo increíble que será nuestro futuro.  
+Desde aquel 25 de diciembre de 2025 mi vida cambió por completo.  
+Llegaste como el regalo más bonito que pudo darme la vida.  
+Gracias por tu ternura, tu sonrisa y cada momento que compartimos.  
+Si esto es apenas el inicio, no puedo imaginar lo maravilloso que será nuestro futuro.  
 <br><br>
 Siempre tuyo,<br>
 Castillo 💚
 </p>
-<div class="counter" id="counter"></div>
-</div>
 
+<div class="counter" id="counter"></div>
+<p style="margin-top:20px;">Att. Castillo 💚</p>
+</div>
 </div>
 
 <script>
 
-/* MÚSICA opción 2 */
+/* 🎵 Música opción 2 */
 const music = document.getElementById("bgMusic");
 document.addEventListener("click", function(){
   music.play();
 }, { once: true });
 
-/* LLUVIA CONSTANTE */
+/* ❤️ Lluvia constante */
 function createHeart(){
 const heart=document.createElement("div");
 heart.classList.add("heart");
@@ -232,7 +232,6 @@ if(noClicks<phrases.length){
 noBtn.innerText=phrases[noClicks-1];
 }
 
-noBtn.style.position="absolute";
 noBtn.style.top=Math.random()*80+"%";
 noBtn.style.left=Math.random()*80+"%";
 
@@ -254,13 +253,13 @@ document.getElementById("letter").classList.add("show");
 },3000);
 });
 
-/* CONTADOR */
+/* ⏳ Contador */
 function updateCounter(){
 const startDate=new Date("2025-12-25");
 const now=new Date();
 const diff=now-startDate;
-
 const days=Math.floor(diff/(1000*60*60*24));
+
 document.getElementById("counter").innerText=
 "Llevamos juntos "+days+" días 💚";
 }
