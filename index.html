@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miriam ❤️ Castillo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
 body{
+  margin:0;
+  font-family:Arial, sans-serif;
   background:#ffd6e8;
-  font-family:'Poppins',sans-serif;
   overflow:hidden;
   text-align:center;
 }
@@ -24,8 +22,8 @@ section{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:20px;
   transition:opacity 0.8s;
+  padding:20px;
 }
 
 .hidden{
@@ -33,34 +31,13 @@ section{
   pointer-events:none;
 }
 
-h1{
-  font-family:'Playfair Display',serif;
-  color:#8a004f;
-  margin-bottom:20px;
-}
-
-p{
-  color:#6b0040;
-  margin-bottom:20px;
-  max-width:500px;
-}
-
-.buttons{
-  margin-top:20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:15px;
-  position:relative;
-  height:200px;
-}
-
 button{
-  padding:14px 30px;
+  padding:12px 25px;
   border:none;
   border-radius:30px;
+  margin:10px;
+  font-size:18px;
   cursor:pointer;
-  font-size:1rem;
   transition:0.3s;
 }
 
@@ -77,7 +54,7 @@ button{
 
 .gallery{
   display:flex;
-  gap:10px;
+  gap:15px;
   flex-wrap:wrap;
   justify-content:center;
 }
@@ -87,6 +64,11 @@ button{
   height:170px;
   object-fit:cover;
   border-radius:15px;
+  transition:0.3s;
+}
+
+.gallery img:hover{
+  transform:scale(1.1);
 }
 
 .heart{
@@ -103,56 +85,28 @@ button{
     opacity:0;
   }
 }
-
-.final-screen{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  opacity:0;
-  transition:1s;
-  z-index:10;
-}
-
-.final-screen.show{
-  opacity:1;
-}
-
-.counter{
-  margin-top:15px;
-  font-size:1.1rem;
-  color:white;
-}
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- ESCENAS -->
+<!-- ESCENA 1 -->
 <section id="scene1">
   <h1>Mi amor 💚</h1>
   <p>Hay algo que quiero decirte...</p>
   <button class="primary" onclick="nextScene(2)">Descubrir</button>
 </section>
 
+<!-- ESCENA 2 -->
 <section id="scene2" class="hidden">
-  <h1>Desde que llegaste...</h1>
-  <p>Mi vida es más bonita contigo.</p>
-  <button class="primary" onclick="nextScene(3)">Continuar</button>
+  <h1>Miriam...</h1>
+  <p>Antes de preguntarte algo...</p>
+  <button class="primary" onclick="nextScene(3)">Ver nuestros momentos ❤️</button>
 </section>
 
+<!-- ESCENA 3 GALERÍA -->
 <section id="scene3" class="hidden">
-  <h1>Nuestros momentos ❤️</h1>
+  <h1>Nuestros Momentos 💕</h1>
   <div class="gallery">
     <img src="foto1.jpg">
     <img src="foto2.jpg">
@@ -161,34 +115,31 @@ button{
   <button class="primary" onclick="nextScene(4)">Tengo una pregunta...</button>
 </section>
 
+<!-- ESCENA 4 PREGUNTA -->
 <section id="scene4" class="hidden">
   <h1>Miriam, ¿Quieres ser mi San Valentín? ❤️</h1>
-  <div class="buttons">
-    <button class="primary" id="yesBtn">Sí ❤️</button>
-    <button class="secondary" id="noBtn">No 😏</button>
-  </div>
+  <button class="primary" id="yesBtn">Sí ❤️</button>
+  <button class="secondary" id="noBtn">No 😏</button>
 </section>
 
-<div class="final-screen" id="finalScreen">
+<!-- FINAL -->
+<section id="final" class="hidden">
   <h1>Te amo Miriam 💚</h1>
-  <div class="counter" id="counter"></div>
-</div>
+  <p>Att. Castillo 💚</p>
+</section>
 
 <script>
-// Música
-const music = document.getElementById("bgMusic");
-document.addEventListener("click", () => music.play(), { once: true });
 
-// Cambiar escenas
-function nextScene(scene){
+// Cambio de escenas
+function nextScene(num){
   document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-  document.getElementById("scene"+scene).classList.remove("hidden");
+  document.getElementById("scene"+num).classList.remove("hidden");
 }
 
-// Lluvia de corazones
+// Lluvia constante de corazones
 function createHeart(){
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
+  const heart=document.createElement("div");
+  heart.className="heart";
   heart.innerHTML="❤️";
   heart.style.left=Math.random()*100+"vw";
   heart.style.animationDuration=(Math.random()*3+2)+"s";
@@ -197,51 +148,45 @@ function createHeart(){
 }
 setInterval(createHeart,300);
 
-// Botones traviesos
-let noClicks = 0, yesSize = 1;
-const phrases = [
+// Botones dinámicos
+let noClicks=0;
+let yesScale=1;
+
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+
+const frases=[
   "¿Segura? 😢",
-  "Di que sí… 💚",
+  "Di que sí 💚",
   "Me pondré triste 🥺",
   "No seas malita 😏",
-  "Ya no podrás decir que no 😌"
+  "Ya casi desaparezco 😅"
 ];
 
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-
-noBtn.addEventListener("click", ()=>{
+noBtn.addEventListener("click",()=>{
   noClicks++;
-  yesSize += 0.5;
-  yesBtn.style.transform = "scale("+yesSize+")";
+  yesScale+=0.4;
+  yesBtn.style.transform="scale("+yesScale+")";
 
-  if(noClicks < phrases.length){
-    noBtn.innerText = phrases[noClicks-1];
+  if(noClicks<=frases.length){
+    noBtn.innerText=frases[noClicks-1];
   }
 
-  noBtn.style.top=Math.random()*120+"px";
-  noBtn.style.left=Math.random()*150+"px";
+  noBtn.style.top=Math.random()*70+"%";
+  noBtn.style.left=Math.random()*70+"%";
 
-  if(noClicks >= 5){
+  if(noClicks>5){
     noBtn.style.display="none";
-    yesBtn.style.transform="scale(8)";
+    yesBtn.style.transform="scale(4)";
   }
 });
 
-yesBtn.addEventListener("click", ()=>{
-  yesBtn.style.transform="scale(15)";
-  setTimeout(()=> document.getElementById("finalScreen").classList.add("show"), 1000);
+yesBtn.addEventListener("click",()=>{
+  document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
+  document.getElementById("final").classList.remove("hidden");
 });
 
-// Contador de días juntos
-function updateCounter(){
-  const start=new Date("2025-12-25"), now=new Date();
-  const diff=now-start;
-  const days=Math.floor(diff/(1000*60*60*24));
-  document.getElementById("counter").innerText="Llevamos juntos "+days+" días 💚";
-}
-updateCounter();
 </script>
 
 </body>
-  </html>
+</html>
